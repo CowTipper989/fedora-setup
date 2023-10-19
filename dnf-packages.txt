@@ -20,3 +20,4 @@ lutris
 telegram-desktop
 vlc
 remmina
+syncthing
