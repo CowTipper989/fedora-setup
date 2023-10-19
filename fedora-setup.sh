@@ -23,7 +23,9 @@ OPTIONS=(1 "Enable RPM Fusion - Enables the RPM Fusion repos for your specific v
          6 "Install Oh-My-ZSH - Installs Oh-My-ZSH along with Starship prompt"
          7 "Install Extras - Themes Fonts and Codecs"
          8 "Install Nvidia - Install akmod Nvidia drivers"
-	     9 "Quit")
+         9 "Install Tailscale & VSCode"
+         10 "Configure Git"
+	     11 "Quit")
 
 while [ "$CHOICE -ne 4" ]; do
     CHOICE=$(dialog --clear \
@@ -95,7 +97,22 @@ while [ "$CHOICE -ne 4" ]; do
             sudo dnf install -y akmod-nvidia
             notify-send "Please wait 5 minutes until rebooting" --expire-time=10
 	       ;;
-        9)
+        9)  echo "Installing Tailscale"
+            sudo dnf config-manager --add-repo https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+            sudo dnf install tailscale
+            sudo systemctl enable --now tailscaled
+            echo "Installing VSCode"
+            sudo rpm --import https://packages.microsoft.com/keys/microsoft.asc
+            sudo sh -c 'echo -e "[code]\nname=Visual Studio Code\nbaseurl=https://packages.microsoft.com/yumrepos/vscode\nenabled=1\ngpgcheck=1\ngpgkey=https://packages.microsoft.com/keys/microsoft.asc" > /etc/yum.repos.d/vscode.repo'
+            dnf check-update
+            sudo dnf install code
+           ;;
+        10) echo "Configuring Git"
+            sudo dnf install git
+            git config --global user.name "Luke Wells"
+            git config --global user.email "wellsluke88@gmail.com"
+           ;;
+        11)
           exit 0
           ;;
     esac

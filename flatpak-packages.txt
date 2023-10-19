@@ -1,4 +1,4 @@
-com.github.GradienceTeam.Gradience
-com.visualstudio.code
-org.signal.Signal
 md.obsidian.Obsidian
+com.github.IsmaelMartinez.teams_for_linux
+com.moonlight_stream.Moonlight
+com.heroicgameslauncher.hgl
